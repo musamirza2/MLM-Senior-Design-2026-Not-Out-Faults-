@@ -18,6 +18,16 @@ dist/
 # Jupyter temporary files
 .ipynb_checkpoints/
 
+# Raw event files and exercise exports kept local
+Event Files Exercises 1_7/
+*.cev
+*.CEV
+Exercise*.csv
+!data/processed/Exercise4.csv
+event*_data.csv
+event_files_analysis.ipynb
+test.ipynb
+
 # Local editor and OS files
 .vscode/
 .idea/
@@ -28,3 +38,6 @@ Thumbs.db
 *.log
 *.tmp
 *.temp
+
+# Generated modeling artifacts
+model_artifacts/
