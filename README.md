@@ -11,13 +11,13 @@ Fault detection analysis and modeling workspace for transmission-line event data
 
 ## Data Policy
 
-Raw CEV/event exercise files are intentionally not tracked. Exercise CSV exports are also ignored except for `data/processed/Exercise4.csv`, which is used by the project.
+Raw CEV/event exercise files are intentionally not tracked. Exercise CSV exports are also ignored except for the processed Exercise 4 and Exercise 5 CSVs used by the project.
 
 Ignored local inputs include:
 
 - `Event Files Exercises 1_7/`
 - `*.cev` and `*.CEV`
-- `Exercise*.csv` outside `data/processed/Exercise4.csv`
+- `Exercise*.csv` outside the allowed processed files in `data/processed/`
 - local virtual environments and editor settings
 
 ## Notes

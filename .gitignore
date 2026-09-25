@@ -24,6 +24,8 @@ Event Files Exercises 1_7/
 *.CEV
 Exercise*.csv
 !data/processed/Exercise4.csv
+!data/processed/Exercise5.csv
+!data/processed/Exercise5_Filtered.csv
 event*_data.csv
 event_files_analysis.ipynb
 test.ipynb
