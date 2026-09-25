@@ -8,6 +8,7 @@ Fault detection analysis and modeling workspace for transmission-line event data
 - `data/processed/` - processed CSV datasets used by the notebooks.
 - `models/` - saved model weights used by the project.
 - `figures/` - exported plots and visual results.
+- `hardware/` - microcontroller firmware, schematics, wiring notes, datasheets, and hardware test logs.
 
 ## Data Policy
 
@@ -23,3 +24,5 @@ Ignored local inputs include:
 ## Notes
 
 Run notebooks from the `notebooks/` directory or keep their relative paths unchanged. The notebooks reference processed data through `../data/processed/` and saved models through `../models/`.
+
+Hardware documentation starts in `hardware/README.md`. The repo is prepared for an ESP-IDF firmware project under `hardware/firmware/esp-idf/`.

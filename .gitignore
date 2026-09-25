@@ -43,3 +43,11 @@ Thumbs.db
 
 # Generated modeling artifacts
 model_artifacts/
+
+# ESP-IDF and embedded firmware build outputs
+hardware/firmware/**/build/
+hardware/firmware/**/managed_components/
+hardware/firmware/**/*.bin
+hardware/firmware/**/*.elf
+hardware/firmware/**/*.map
+hardware/firmware/**/sdkconfig.old
