@@ -12,6 +12,7 @@ typedef enum {
     LED_2,
     LED_3,
     LED_4,
+    LED_5,
     LED_COUNT
 } led_id_t;
 
