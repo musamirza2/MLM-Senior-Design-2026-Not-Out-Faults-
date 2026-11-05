@@ -1,6 +1,13 @@
 # Fault Detection Fall 2026
 
-Fault detection analysis and modeling workspace for transmission-line event data.
+Fault detection analysis and modeling workspace for transmission-line event data. This system uses machine learning to detect faults in a transmission lines utilizing a ESP32-s3.
+
+
+![alt text](faultdetection_diagram2.png)
+
+
+## System Overview
+![alt text](faultdetection_diagram3.png)
 
 ## Repository Layout
 
@@ -12,14 +19,7 @@ Fault detection analysis and modeling workspace for transmission-line event data
 
 ## Data Policy
 
-Raw CEV/event exercise files are intentionally not tracked. Exercise CSV exports are also ignored except for the processed Exercise 4 and Exercise 5 CSVs used by the project.
 
-Ignored local inputs include:
-
-- `Event Files Exercises 1_7/`
-- `*.cev` and `*.CEV`
-- `Exercise*.csv` outside the allowed processed files in `data/processed/`
-- local virtual environments and editor settings
 
 ## Notes
 

@@ -1,21 +1,16 @@
-#include "led.h"
+#include "Fault_Indicators_Led.h"
 
 #include <stdint.h>
 #include "esp_err.h"
 #include "driver/gpio.h"
-
-#define LED_GPIO_16 GPIO_NUM_16
-#define LED_GPIO_17 GPIO_NUM_17
-#define LED_GPIO_18 GPIO_NUM_18
-#define LED_GPIO_7 GPIO_NUM_7
-#define LED_GPIO_6  GPIO_NUM_6
+#include "board.h"
 
 static const gpio_num_t led_gpios[LED_COUNT] = {
-    LED_GPIO_16,
-    LED_GPIO_17,
-    LED_GPIO_18,
-    LED_GPIO_7,
-    LED_GPIO_6
+    BOARD_LED_1_GPIO,
+    BOARD_LED_2_GPIO,
+    BOARD_LED_3_GPIO,
+    BOARD_LED_4_GPIO,
+    BOARD_LED_5_GPIO
 };
 
 void led_init(void)
