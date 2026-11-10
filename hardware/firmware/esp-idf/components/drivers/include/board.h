@@ -26,7 +26,7 @@
 
 // Pins for SCL and SDA. These can be overridden in the application code.
 #define I2C_DRIVER_SCL_IO_DEFAULT         GPIO_NUM_9
-#define I2C_DRIVER_SDA_IO_DEFAULT         GPIO_NUM_21
+#define I2C_DRIVER_SDA_IO_DEFAULT         GPIO_NUM_8
 
 
 #endif // BOARD_H

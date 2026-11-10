@@ -51,6 +51,9 @@ static esp_err_t lcd_connect(void) {
         .pullup_enable = true,
     };
 
+    ESP_LOGI(TAG, "LCD I2C: SDA=GPIO%d SCL=GPIO%d, clock=%lu Hz",
+             (int)config.sda_io_num, (int)config.scl_io_num,
+             (unsigned long)config.clk_speed_hz);
     esp_err_t err = i2c_driver_init(&config);
     if (err != ESP_OK && err != ESP_ERR_INVALID_STATE) {
         return err;
@@ -63,10 +66,26 @@ static esp_err_t lcd_connect(void) {
         if (err == ESP_OK) {
             lcd_port = config.port;
             lcd_address = addresses[i];
+            ESP_LOGI(TAG, "LCD backpack acknowledged at 0x%02X", lcd_address);
             return ESP_OK;
         }
     }
 
+    // Diagnose other addresses without sending LCD commands to unknown devices.
+    ESP_LOGW(TAG, "No ACK at 0x27/0x3F; scanning I2C addresses 0x08-0x77");
+    unsigned found = 0;
+    for (uint8_t address = 0x08; address <= 0x77; ++address) {
+        err = i2c_driver_probe(config.port, address);
+        if (err == ESP_OK) {
+            ESP_LOGI(TAG, "I2C device found at 0x%02X", address);
+            ++found;
+        } else if (err != ESP_ERR_NOT_FOUND) {
+            ESP_LOGE(TAG, "I2C scan failed at 0x%02X: %s; check SDA/SCL idle levels and pull-ups",
+                     address, esp_err_to_name(err));
+            return err;
+        }
+    }
+    ESP_LOGW(TAG, "I2C scan complete: %u device(s) found", found);
     return ESP_ERR_NOT_FOUND;
 }
 
@@ -90,6 +109,7 @@ void lcd_init(void) {
     lcd_send_command(0x01);
     lcd_send_command(0x06);
     lcd_send_command(0x0C);
+    ESP_LOGI(TAG, "LCD initialization commands sent");
 }
 
 void lcd_send_command(uint8_t command) {
