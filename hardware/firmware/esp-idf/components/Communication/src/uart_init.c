@@ -151,42 +151,6 @@ void lcd_prediction_task(void *pvParameters)
     double scores[11];
     char text[24];
 
-    // Test the compiled model/scaler independently of MATLAB and UART parsing.
-    static const double healthy_test[21] = {
-        131608.5624, 131656.2994, 131358.866,
-        131541.2401, 80.26836693, 105.8769446,
-        195.9159698, 196.8741283, 197.0134168,
-        196.6001291, 0.2006591722, 666.7508644,
-        671.7602582, 668.7333702, 0.7795063949,
-        0.5582098138, 0.2261141782, 0.001020646187,
-        0.00396493328, 0.0006102144608, 0.0008048954417
-    };
-    double test_scaled[21];
-    for (int i = 0; i < 21; ++i) {
-        test_scaled[i] = (healthy_test[i] - feature_mean[i]) / feature_scale[i];
-    }
-    score(test_scaled, scores);
-    bool test_valid = true;
-    for (int i = 0; i < 11; ++i) {
-        if (!isfinite(scores[i])) test_valid = false;
-    }
-    int test_prediction = 0;
-    for (int i = 1; i < 11; ++i) {
-        if (scores[i] > scores[test_prediction]) test_prediction = i;
-    }
-    ESP_LOGI("prediction", "DIAG-v1: built %s %s; healthy self-test=%d (expected 10)",
-             __DATE__, __TIME__, test_prediction);
-    ESP_LOGI("prediction", "Self-test score[10]=%.9g (expected about 10.6761)", scores[10]);
-    lcd_send_command(0x80);
-    lcd_print("DIAG2 SELF TEST  ");
-    lcd_send_command(0xC0);
-    if (test_valid) {
-        snprintf(text, sizeof(text), "Got:%2d Want:10  ", test_prediction);
-        lcd_print(text);
-    } else {
-        lcd_print("MODEL NaN/Inf   ");
-    }
-
     while (true) {
         if (xQueueReceive(prediction_queue, &request,
                           portMAX_DELAY) == pdTRUE) {
@@ -197,8 +161,6 @@ void lcd_prediction_task(void *pvParameters)
                 scaled[i] = (request.features[i] - feature_mean[i])
                             / feature_scale[i];
                 if (!isfinite(scaled[i])) values_valid = false;
-                ESP_LOGI("prediction", "feature[%d]: raw=%.17g scaled=%.17g",
-                         i, request.features[i], scaled[i]);
             }
             if (!values_valid) {
                 lcd_send_command(0x80);
@@ -210,7 +172,6 @@ void lcd_prediction_task(void *pvParameters)
             score(scaled, scores);
             for (int i = 0; i < 11; ++i) {
                 if (!isfinite(scores[i])) values_valid = false;
-                ESP_LOGI("prediction", "score[%d]=%.17g", i, scores[i]);
             }
             if (!values_valid) {
                 lcd_send_command(0x80);
